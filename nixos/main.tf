@@ -18,9 +18,19 @@ variable "arguments" {
   default = []
 
   description = <<-END
-    Extra arguments for the nixos-rebuild command"
+    Extra arguments for the `nixos-rebuild` command
 
     Example: `["--build-host", "root@$${aws_instance.example.public_ip}"]`
+    END
+}
+
+variable "ssh_options" {
+  type = string
+
+  default = null
+
+  description = <<-END
+    `ssh` options passed to `nixos-rebuild` via `NIX_SSHOPTS`
     END
 }
 
@@ -80,6 +90,10 @@ resource "null_resource" "deploy" {
   }
 
   provisioner "local-exec" {
+    environment = {
+      NIX_SSHOPTS = var.ssh_options
+    }
+
     interpreter = concat (
       [ "nix",
         "shell",

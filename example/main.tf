@@ -1,4 +1,4 @@
-variable "public_key_file" {
+variable "private_key_file" {
   type = string
 
   nullable = false
@@ -62,7 +62,7 @@ resource "aws_security_group" "example" {
 }
 
 resource "aws_key_pair" "example" {
-  public_key = file("${var.public_key_file}")
+  public_key = file("${var.private_key_file}.pub")
 }
 
 module "ami" {
@@ -87,8 +87,21 @@ resource "aws_instance" "example" {
   }
 }
 
+# This ensures that the instance is reachable via `ssh` before we deploy NixOS
+resource "null_resource" "example" {
+  provisioner "remote-exec" {
+    connection {
+      host = aws_instance.example.public_dns
+
+      private_key = file(var.private_key_file)
+    }
+
+    inline = [ ":" ]
+  }
+}
+
 module "nixos" {
-  source = "github.com/Gabriella439/terraform-nixos-ng//nixos"
+  source = "../nixos"
 
   host = "root@${aws_instance.example.public_ip}"
 
@@ -100,6 +113,10 @@ module "nixos" {
     # sure that the firewall and security group permit outbound connections.
     "--build-host", "root@${aws_instance.example.public_ip}",
   ]
+
+  ssh_options = "-o StrictHostKeyChecking=accept-new"
+
+  depends_on = [ null_resource.example ]
 }
 
 output "public_dns" {
