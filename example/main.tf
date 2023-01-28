@@ -7,8 +7,6 @@ variable "public_key_file" {
 variable "region" {
   type = string
 
-  default = "us-east-1"
-
   nullable = false
 }
 
@@ -28,6 +26,7 @@ terraform {
 }
 
 resource "aws_security_group" "example" {
+    # This is needed for the "nixos" module to manage the target host
     ingress {
         from_port = 22
 
@@ -36,6 +35,19 @@ resource "aws_security_group" "example" {
         protocol = "tcp"
 
         cidr_blocks = [ "0.0.0.0/0" ]
+    }
+
+    # This is needed if you build on the target host, like this example does,
+    # so that the machine can download dependencies.  You would also need this
+    # if you were to enable the `--use-substitutes` flag for `nixos-rebuild`.
+    egress {
+        from_port = 0
+
+        to_port = 0
+
+        protocol = "-1"
+
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
@@ -73,8 +85,10 @@ module "nixos" {
     flake = ".#default"
 
     arguments = [
-      "--build-host",
-      "root@${aws_instance.example.public_ip}",
+      # You can build on another machine, including the target machine, by
+      # enabling this option, but if you build on the target machine then make
+      # sure that the firewall and security group permit outbound connections.
+      "--build-host", "root@${aws_instance.example.public_ip}",
     ]
 }
 
