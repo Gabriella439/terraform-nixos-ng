@@ -96,6 +96,7 @@ resource "null_resource" "deploy" {
 
     interpreter = concat (
       [ "nix",
+        "--extra-experimental-features", "nix-command flakes",
         "shell",
          # TODO: Switch to next LTS release of Nixpkgs when available
         "github:NixOS/nixpkgs/3cd694#nixos-rebuild",

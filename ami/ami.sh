@@ -9,4 +9,4 @@ REGION="${3}"
 SYSTEM="${4}"
 VIRTUALIZATION_TYPE="${5}"
 
-nix eval --no-write-lock-file "${DIRECTORY}#\"${RELEASE}\".\"${REGION}\".\"${SYSTEM}\".\"${VIRTUALIZATION_TYPE}\"" | jq '{ "ami": . }'
+nix eval --extra-experimental-features 'nix-command flakes' --no-write-lock-file "${DIRECTORY}#\"${RELEASE}\".\"${REGION}\".\"${SYSTEM}\".\"${VIRTUALIZATION_TYPE}\"" | jq '{ "ami": . }'
