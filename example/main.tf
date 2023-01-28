@@ -10,7 +10,17 @@ variable "region" {
   nullable = false
 }
 
+variable "profile" {
+  type = string
+
+  nullable = false
+
+  default = "default"
+}
+
 provider "aws" {
+  profile = var.profile
+
   region = var.region
 }
 
