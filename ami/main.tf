@@ -1,6 +1,8 @@
 variable "release" {
   type = string
 
+  nullable = false
+
   default = "latest"
 
   description = "NixOS release"
@@ -9,15 +11,15 @@ variable "release" {
 variable "region" {
   type = string
 
-  default = null
-
-  nullable = true
+  nullable = false
 
   description = "AWS region"
 }
 
 variable "system" {
   type = string
+
+  nullable = false
 
   default = "x86_64-linux"
 
@@ -28,7 +30,7 @@ variable "system" {
 
     - x86_64-linux
     - aarch64-linux
-  END
+    END
 
   validation {
     condition = contains(["x86_64-linux", "aarch64-linux"], var.system)
@@ -38,12 +40,14 @@ variable "system" {
 
       - x86_64-linux
       - aarch64-linux
-    END
+      END
   }
 }
 
 variable "virtualization_type" {
   type = string
+
+  nullable = false
 
   default = "hvm-ebs"
 
@@ -56,7 +60,7 @@ variable "virtualization_type" {
     - hvm-s3
     - pv-ebs
     - pv-s3
-  END
+    END
 
   validation {
     condition = contains(["hvm-ebs", "hvm-s3", "pv-ebs", "pv-s3"], var.virtualization_type)
@@ -68,7 +72,7 @@ variable "virtualization_type" {
       - hvm-s3
       - pv-ebs
       - pv-s3
-    END
+      END
   }
 }
 

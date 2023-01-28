@@ -1,5 +1,8 @@
 variable "host" {
   type = string
+
+  nullable = false
+
   description = <<-END
     The host to deploy to
 
@@ -9,16 +12,22 @@ variable "host" {
 
 variable "arguments" {
   type = list(string)
+
+  nullable = false
+
   default = []
+
   description = <<-END
     Extra arguments for the nixos-rebuild command"
 
     Example: `["--build-host", "root@$${aws_instance.example.public_ip}"]`
-  END
+    END
 }
 
 variable "flake" {
   type = string
+
+  nullable = false
 
   description = <<-END
     Flake URI for the NixOS configuration to deploy

@@ -23,7 +23,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_release"></a> [release](#input\_release) | NixOS release | `string` | `"latest"` | no |
 | <a name="input_system"></a> [system](#input\_system) | The system architecture<br><br>One of:<br><br>- x86\_64-linux<br>- aarch64-linux | `string` | `"x86_64-linux"` | no |
 | <a name="input_virtualization_type"></a> [virtualization\_type](#input\_virtualization\_type) | The virtualization type of the AMI<br><br>One of:<br><br>- hvm-ebs<br>- hvm-s3<br>- pv-ebs<br>- pv-s3 | `string` | `"hvm-ebs"` | no |
