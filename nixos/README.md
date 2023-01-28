@@ -25,9 +25,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_arguments"></a> [arguments](#input\_arguments) | Extra arguments for the nixos-rebuild command"<br><br>Example: `["--build-host", "root@${aws_instance.example.public_ip}"]` | `list(string)` | `[]` | no |
+| <a name="input_arguments"></a> [arguments](#input\_arguments) | Extra arguments for the `nixos-rebuild` command<br><br>Example: `["--build-host", "root@${aws_instance.example.public_ip}"]` | `list(string)` | `[]` | no |
 | <a name="input_flake"></a> [flake](#input\_flake) | Flake URI for the NixOS configuration to deploy<br><br>The flake URI needs to be suitable for `nixos-rebuild`, meaning that you<br>should not include `nixosConfigurations` in the attribute path of the flake<br>URI.  For example, if your NixOS configuration were actually stored at<br>`.#nixosConfigurations.machine` within your flake then the flake URI that<br>`nixos-rebuild` would expect is actually `.#machine`. | `string` | n/a | yes |
 | <a name="input_host"></a> [host](#input\_host) | The host to deploy to<br><br>This can be any address that `ssh` accepts, including a `user@` prefix | `string` | n/a | yes |
+| <a name="input_ssh_options"></a> [ssh\_options](#input\_ssh\_options) | `ssh` options passed to `nixos-rebuild` via `NIX_SSHOPTS` | `string` | `null` | no |
 
 ## Outputs
 
