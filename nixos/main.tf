@@ -81,7 +81,7 @@ locals {
 }
 
 data "external" "instantiate" {
-  program = [ "${path.module}/nixos-rebuild.sh", local.real_flake ]
+  program = [ "${path.module}/instantiate.sh", local.real_flake ]
 }
 
 resource "null_resource" "deploy" {
