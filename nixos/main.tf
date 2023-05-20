@@ -98,7 +98,6 @@ resource "null_resource" "deploy" {
       [ "nix",
         "--extra-experimental-features", "nix-command flakes",
         "shell",
-         # TODO: Switch to next LTS release of Nixpkgs when available
         "github:NixOS/nixpkgs/22.11#nixos-rebuild",
         "--command",
         "nixos-rebuild",
