@@ -98,7 +98,7 @@ resource "null_resource" "deploy" {
       [ "nix",
         "--extra-experimental-features", "nix-command flakes",
         "shell",
-        "github:NixOS/nixpkgs/22.11#nixos-rebuild",
+        "github:NixOS/nixpkgs/23.11#nixos-rebuild",
         "--command",
         "nixos-rebuild",
         "--fast",
