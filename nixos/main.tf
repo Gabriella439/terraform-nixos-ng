@@ -92,13 +92,14 @@ resource "null_resource" "deploy" {
   provisioner "local-exec" {
     environment = {
       NIX_SSHOPTS = var.ssh_options
+      NIXOS_SWITCH_USE_DIRTY_ENV = 1
     }
 
     interpreter = concat (
       [ "nix",
         "--extra-experimental-features", "nix-command flakes",
         "shell",
-        "github:NixOS/nixpkgs/23.11#nixos-rebuild",
+        "github:NixOS/nixpkgs/24.05#nixos-rebuild",
         "--command",
         "nixos-rebuild",
         "--fast",
