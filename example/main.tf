@@ -66,11 +66,13 @@ resource "aws_key_pair" "example" {
 }
 
 module "ami" {
-  source = "github.com/Gabriella439/terraform-nixos-ng//ami"
+  source = "../ami"
 
   release = "22.11"
 
-  region = var.region
+  providers = {
+    aws = aws
+   }
 }
 
 resource "aws_instance" "example" {
